@@ -1,0 +1,22 @@
+# Binaries, plugins, libs
+*.dll
+*.dylib
+*.exe
+*.exe~
+*.so
+*.o
+*.a
+
+# Testing
+*.test
+*.tmp
+
+# Coverage and go files
+coverage
+coverage.out
+coverage.txt
+go.sum
+.env
+
+# Exclude intelij IDE folders
+.idea/*
