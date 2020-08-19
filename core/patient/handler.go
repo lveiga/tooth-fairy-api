@@ -10,7 +10,6 @@ type Handler struct{}
 
 //Bind - method responsible to bind controller and actions
 func (h *Handler) Bind(router *gin.RouterGroup, app *server.Application) {
-	//var config = app.GetConfig()
 	var database = app.GetDatabase()
 	var controller = newController(newRepository(database))
 
@@ -18,4 +17,5 @@ func (h *Handler) Bind(router *gin.RouterGroup, app *server.Application) {
 	router.GET("/patients", controller.GetPacients)
 	router.GET("/patients:id", controller.GetPatient)
 	router.PUT("/patients:id", controller.UpdatePatient)
+	router.DELETE("/patients:id", controller.DeletePatient)
 }
