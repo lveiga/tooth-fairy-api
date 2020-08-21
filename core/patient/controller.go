@@ -13,6 +13,17 @@ type controller struct {
 	patientRepository Repository
 }
 
+// ListPatients godoc
+// @Summary List patients
+// @Description get patients
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} patient.Patient
+// @Header 200 {string} Token "qwerty"
+// @Failure 400 {object} http.HTTPError
+// @Failure 404 {object} http.HTTPError
+// @Failure 500 {object} http.HTTPError
+// @Router /patients [get]
 func (c *controller) GetPacients(ctx *gin.Context) {
 	var patient Patient
 	if err := ctx.ShouldBindJSON(&patient); err != nil {

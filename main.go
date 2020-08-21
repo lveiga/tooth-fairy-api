@@ -30,6 +30,6 @@ func main() {
 			&patient.Handler{},
 		)
 
-	logger.Println("Start server...")
-	go server.Start()
+	logger.Println("Start tooth fairy...")
+	server.Start()
 }

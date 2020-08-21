@@ -1,7 +1,6 @@
 package config
 
 import (
-	"fmt"
 	"os"
 	"time"
 
@@ -10,23 +9,20 @@ import (
 
 // AppConfig - responsible to manage application configuration
 type AppConfig struct {
-	BindAddr     string
-	DatabaseHost string
-	DatabasePort string
-	DatabaseName string
-	DatabaseUser string
-	DatabasePass string
-
-	PreviousPasswordURL string
-	Environment         string
-
+	BindAddr             string
+	DatabaseHost         string
+	DatabasePort         string
+	DatabaseName         string
+	DatabaseUser         string
+	DatabasePass         string
+	Environment          string
 	ContextGenricTimeout time.Duration
 }
 
 // New - responsible to store env configs
 func New() *AppConfig {
-	if err := godotenv.Load("../.env"); err != nil {
-		fmt.Println("WARN - ERROR TO LOAD .ENV FILE")
+	if err := godotenv.Load(".env"); err != nil {
+		//fmt.Println("WARN - ERROR TO LOAD .ENV FILE")
 	}
 
 	return &AppConfig{
@@ -36,7 +32,6 @@ func New() *AppConfig {
 		DatabaseName:         os.Getenv("DATABASE_NAME"),
 		DatabaseUser:         os.Getenv("DATABASE_USER"),
 		DatabasePass:         os.Getenv("DATABASE_PASS"),
-		PreviousPasswordURL:  os.Getenv("PREVIOUS_PASSWORD_URL"),
 		Environment:          os.Getenv("ENVIRONMENT"),
 		ContextGenricTimeout: 5 * time.Second,
 	}

@@ -6,26 +6,35 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// HTTPError example
+type HTTPError struct {
+	Code    int    `json:"code" example:"400"`
+	Message string `json:"message" example:"status bad request"`
+}
+
 // BadRequest - returns when payload contains invalid data
 func BadRequest(ctx *gin.Context, err error) {
-	ctx.JSON(net.StatusBadRequest, gin.H{
-		"code":    net.StatusBadRequest,
-		"message": err.Error(),
-	})
+	er := HTTPError{
+		Code:    net.StatusBadRequest,
+		Message: err.Error(),
+	}
+	ctx.JSON(net.StatusBadRequest, er)
 }
 
 // NotFound - returns when client request a invalid route
 func NotFound(ctx *gin.Context) {
-	ctx.JSON(net.StatusNotFound, gin.H{
-		"code":    net.StatusNotFound,
-		"message": "rota não encontrada",
-	})
+	er := HTTPError{
+		Code:    net.StatusNotFound,
+		Message: "rota não encontrada",
+	}
+	ctx.JSON(net.StatusNotFound, er)
 }
 
 // InternalServerError - returns when an error occurs in server
 func InternalServerError(ctx *gin.Context) {
-	ctx.JSON(net.StatusInternalServerError, gin.H{
-		"code":    net.StatusInternalServerError,
-		"message": "ocorreu um erro interno, favor tente mais tarde",
-	})
+	er := HTTPError{
+		Code:    net.StatusInternalServerError,
+		Message: "rota não encontrada",
+	}
+	ctx.JSON(net.StatusInternalServerError, er)
 }

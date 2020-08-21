@@ -4,12 +4,16 @@ import (
 	"context"
 	"net/http"
 
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
+
 	helmet "github.com/danielkov/gin-helmet"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/gzip"
 	"github.com/gin-gonic/gin"
 	ginlogrus "github.com/toorop/gin-logrus"
 	"github.com/tooth-fairy/config"
+	"github.com/tooth-fairy/docs"
 	"github.com/tooth-fairy/infrastructure/database"
 	h "github.com/tooth-fairy/infrastructure/http"
 	"github.com/tooth-fairy/infrastructure/log"
@@ -61,6 +65,13 @@ func (a *Application) WithMiddlewares() *Application {
 
 	//TODO: CUSTOMIZE RECOVERY MIDDLEWARE AND CHECK APPLICATION PANICS
 	a.router.Use(gin.Recovery())
+	docs.SwaggerInfo.Title = "Swagger Example API"
+	docs.SwaggerInfo.Description = "This is a sample server Petstore server."
+	docs.SwaggerInfo.Version = "1.0"
+	docs.SwaggerInfo.Host = "petstore.swagger.io"
+	docs.SwaggerInfo.BasePath = "/v2"
+	docs.SwaggerInfo.Schemes = []string{"http", "https"}
+	a.router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	return a
 }

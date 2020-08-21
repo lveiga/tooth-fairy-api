@@ -1,13 +1,23 @@
 version: '3'
 services:
-  app:
-    container_name: full_app
-    build: .
-    ports: 
-      - 8080:8080 
-    restart: on-failure
+  api:
+    build: 
+      context: . 
+      dockerfile: Dockerfile.dev
     volumes:
-      - api:/usr/src/app/
+      - ./:/go/src/github.com/tooth-fairy
+    ports: 
+      - "2345:2345"
+      - "8080:8080"
+    environment: 
+      ENVIRONMENT: prd
+      BIND_ADDR: ":8080"
+      DATABASE_USER: olivia 
+      DATABASE_PASS: summer@12
+      DATABASE_DB: main_test
+      DATABASE_HOST: fullstack-postgres
+      DATABASE_PORT: 5432
+    restart: on-failure
     depends_on:
       - fullstack-postgres          
     networks:
@@ -15,24 +25,23 @@ services:
 
 
   fullstack-postgres:
-    image: postgres:latest
-    container_name: full_db_postgres
+    image: postgres
     environment:
-      - POSTGRES_USER=${DATABASE_USER}  
-      - POSTGRES_PASSWORD=${DATABASE_PASS}
-      - POSTGRES_DB=${DATABASE_NAME}
-      - DATABASE_HOST=${DATABASE_HOST} 
+      - POSTGRES_DB=main_test
+      - POSTGRES_USER=olivia
+      - POSTGRES_PASSWORD=summer@12
+      - POSTGRES_HOST=fullstack-postgres
     ports:
-      - '5432:5432'
+      - "5432:5432"
     volumes:
-      - database_postgres:/var/lib/postgresql/data
+      - ./data/postgres:/var/lib/postgresql/data
+      # - ./base.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - fullstack   
 
 volumes:
   api:
-  database_postgres:                  
-
+  database_postgres:            
 
 networks:
   fullstack:

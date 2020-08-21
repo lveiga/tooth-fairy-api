@@ -1,0 +1,8 @@
+FROM golang:1.14-alpine 
+ENV CGO_ENABLED 0
+RUN apk update && apk add bash inotify-tools git
+WORKDIR /go/src/github.com/tooth-fairy
+RUN go get github.com/derekparker/delve/cmd/dlv
+COPY . .
+RUN go get -v ./... 
+ENTRYPOINT sh live-reload.sh
