@@ -68,4 +68,151 @@ paths:
           schema:
             $ref: '#/definitions/http.HTTPError'
       summary: List patients
+    post:
+      consumes:
+      - application/json
+      description: create patient with body patient json
+      parameters:
+      - description: Patient
+        in: body
+        name: patients
+        required: true
+        schema:
+          $ref: '#/definitions/patient.Patient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/patient.Patient'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+      summary: Create a new patient
+  /patients/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: get string by ID
+      operationId: get-string-by-int
+      parameters:
+      - description: Patient ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/patient.Patient'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+      summary: Delete a patient
+    get:
+      consumes:
+      - application/json
+      description: get string by ID
+      operationId: get-string-by-int
+      parameters:
+      - description: Patient ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/patient.Patient'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+      summary: Show a patient
+    put:
+      consumes:
+      - application/json
+      description: get string by ID
+      operationId: get-string-by-int
+      parameters:
+      - description: Patient ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Patient
+        in: body
+        name: patients
+        required: true
+        schema:
+          $ref: '#/definitions/patient.Patient'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          headers:
+            Token:
+              description: qwerty
+              type: string
+          schema:
+            $ref: '#/definitions/patient.Patient'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/http.HTTPError'
+      summary: Update a patient
 swagger: "2.0"
