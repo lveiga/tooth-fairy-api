@@ -39,6 +39,11 @@ func (conn *Database) CheckLiveness() error {
 	return nil
 }
 
+//GetGormClient ....
+func (conn *Database) GetGormClient() *gorm.DB {
+	return conn.client
+}
+
 //New - Creates a new database object
 func New(config *config.AppConfig) (*Database, error) {
 	client, err := createConnection(config)
@@ -46,6 +51,8 @@ func New(config *config.AppConfig) (*Database, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	//migrations(client)
 
 	return &Database{
 		client: client,

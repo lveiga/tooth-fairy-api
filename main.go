@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/tooth-fairy/config"
+	"github.com/tooth-fairy/core/migration"
 	"github.com/tooth-fairy/core/patient"
 	"github.com/tooth-fairy/infrastructure/database"
 	"github.com/tooth-fairy/infrastructure/log"
@@ -20,6 +21,9 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+
+	migration := migration.New(database)
+	migration.Migrations()
 
 	defer database.Close()
 

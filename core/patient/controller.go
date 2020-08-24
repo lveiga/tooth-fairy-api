@@ -40,34 +40,6 @@ func (c *controller) GetPacients(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, patients)
 }
 
-// CreatePatient godoc
-// @Summary Create a new patient
-// @Description create patient with body patient json
-// @Accept  json
-// @Produce  json
-// @Param patients body patient.Patient true "Patient"
-// @Success 200 {object} patient.Patient
-// @Header 200 {string} Token "qwerty"
-// @Failure 400 {object} http.HTTPError
-// @Failure 404 {object} http.HTTPError
-// @Failure 500 {object} http.HTTPError
-// @Router /patients [post]
-func (c *controller) NewPatient(ctx *gin.Context) {
-	var patient Patient
-	if err := ctx.ShouldBindJSON(&patient); err != nil {
-		httptransf.BadRequest(ctx, err)
-		return
-	}
-
-	result, err := c.patientRepository.CreatePatient(&patient)
-	if err != nil {
-		httptransf.InternalServerError(ctx)
-		return
-	}
-
-	ctx.JSON(http.StatusCreated, result)
-}
-
 // ShowPatient godoc
 // @Summary Show a patient
 // @Description get string by ID
@@ -96,6 +68,34 @@ func (c *controller) GetPatient(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, patients)
+}
+
+// CreatePatient godoc
+// @Summary Create a new patient
+// @Description create patient with body patient json
+// @Accept  json
+// @Produce  json
+// @Param patients body patient.Patient true "Patient"
+// @Success 200 {object} patient.Patient
+// @Header 200 {string} Token "qwerty"
+// @Failure 400 {object} http.HTTPError
+// @Failure 404 {object} http.HTTPError
+// @Failure 500 {object} http.HTTPError
+// @Router /patients [post]
+func (c *controller) NewPatient(ctx *gin.Context) {
+	var patient Patient
+	if err := ctx.ShouldBindJSON(&patient); err != nil {
+		httptransf.BadRequest(ctx, err)
+		return
+	}
+
+	result, err := c.patientRepository.CreatePatient(&patient)
+	if err != nil {
+		httptransf.InternalServerError(ctx)
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, result)
 }
 
 // UpdatePatient godoc
