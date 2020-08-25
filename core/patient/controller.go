@@ -25,12 +25,6 @@ type controller struct {
 // @Failure 500 {object} http.HTTPError
 // @Router /patients [get]
 func (c *controller) GetPacients(ctx *gin.Context) {
-	var patient Patient
-	if err := ctx.ShouldBindJSON(&patient); err != nil {
-		httptransf.BadRequest(ctx, err)
-		return
-	}
-
 	patients, err := c.patientRepository.FindAllPatients()
 	if err != nil {
 		httptransf.InternalServerError(ctx)

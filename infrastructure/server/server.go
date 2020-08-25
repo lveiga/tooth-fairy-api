@@ -50,6 +50,7 @@ func (a *Application) GetDatabase() *database.Database {
 
 // WithMiddlewares - responsible to attach middlewares into http request pipeline
 func (a *Application) WithMiddlewares() *Application {
+	//TODO: CUSTOMIZE RECOVERY MIDDLEWARE AND CHECK APPLICATION PANICS
 	a.router.Use(cors.Default())
 	a.router.Use(helmet.Default())
 	a.router.Use(gzip.Gzip(gzip.BestCompression))
@@ -63,13 +64,12 @@ func (a *Application) WithMiddlewares() *Application {
 		h.NotFound(ctx)
 	})
 
-	//TODO: CUSTOMIZE RECOVERY MIDDLEWARE AND CHECK APPLICATION PANICS
 	a.router.Use(gin.Recovery())
 	docs.SwaggerInfo.Title = "Tooth Fairy API"
 	docs.SwaggerInfo.Description = "This is a server of Tooth Fairy."
 	docs.SwaggerInfo.Version = "1.0"
-	docs.SwaggerInfo.Host = "tooth-fairy.swagger.io"
-	docs.SwaggerInfo.BasePath = "/v1"
+	docs.SwaggerInfo.Host = "localhost:8200/"
+	docs.SwaggerInfo.BasePath = "api/v1"
 	docs.SwaggerInfo.Schemes = []string{"http", "https"}
 	a.router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 

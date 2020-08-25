@@ -49,14 +49,14 @@ func (r *repository) GetPatient(uid uint32) (*Patient, error) {
 }
 
 func (r *repository) UpdatePatient(p *Patient, uid uint32) (*Patient, error) {
-	err := r.db.Model(&Patient{}).Where("id = ?", uid).Take(&Patient{}).UpdateColumns(
+	err := r.db.Model(&Patient{}).Where("id = ?", uid).Updates(
 		map[string]interface{}{
-			"name":      p.Name,
-			"phone":     p.Phone,
-			"email":     p.Email,
-			"age":       p.Age,
-			"gender":    p.Gender,
-			"update_at": time.Now(),
+			"name":       p.Name,
+			"phone":      p.Phone,
+			"email":      p.Email,
+			"age":        p.Age,
+			"gender":     p.Gender,
+			"updated_at": time.Now(),
 		},
 	).Error
 
@@ -81,5 +81,9 @@ func (r *repository) DeletePatient(uid uint32) (int64, error) {
 
 // NewRepository - responsible to create a new repository
 func newRepository(db *database.Database) Repository {
-	return &repository{}
+	_db := db.GetGormClient()
+
+	return &repository{
+		db: _db,
+	}
 }

@@ -15,7 +15,7 @@ func (h *Handler) Bind(router *gin.RouterGroup, app *server.Application) {
 
 	router.POST("/patients", controller.NewPatient)
 	router.GET("/patients", controller.GetPacients)
-	router.GET("/patients:id", controller.GetPatient)
-	router.PUT("/patients:id", controller.UpdatePatient)
-	router.DELETE("/patients:id", controller.DeletePatient)
+	router.GET("/patients/:id", controller.GetPatient)
+	router.PUT("/patients/:id", controller.UpdatePatient)
+	router.DELETE("/patients/:id", controller.DeletePatient)
 }
